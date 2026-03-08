@@ -27,6 +27,7 @@ use fedimint_escrow_common::{
     EscrowOutput, EscrowOutputError, EscrowOutputOutcome, EscrowResolution, EscrowStatus,
     MODULE_CONSENSUS_VERSION,
 };
+use fedimint_logging::LOG_MODULE_ESCROW;
 use fedimint_server_core::config::PeerHandleOps;
 use fedimint_server_core::migration::ServerModuleDbMigrationFn;
 use fedimint_server_core::{
@@ -209,6 +210,7 @@ impl ServerModule for Escrow {
             .await;
 
         info!(
+            target: LOG_MODULE_ESCROW,
             order_id = %input.order_id,
             amount = %input.amount,
             "Escrow reserved"
@@ -225,8 +227,10 @@ impl ServerModule for Escrow {
 
     /// Process an escrow output (fulfil or cancel): release held funds.
     ///
-    /// - **Fulfil**: pays the supplier (output amount goes to supplier's e-cash)
-    /// - **Cancel**: refunds the customer (output amount goes back to customer's e-cash)
+    /// - **Fulfil**: pays the supplier (output amount goes to supplier's
+    ///   e-cash)
+    /// - **Cancel**: refunds the customer (output amount goes back to
+    ///   customer's e-cash)
     async fn process_output<'a, 'b>(
         &'a self,
         dbtx: &mut DatabaseTransaction<'b>,
@@ -259,6 +263,7 @@ impl ServerModule for Escrow {
             .await;
 
         info!(
+            target: LOG_MODULE_ESCROW,
             order_id = %output.order_id,
             amount = %record.amount,
             status = ?new_status,

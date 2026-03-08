@@ -50,7 +50,8 @@ pub struct EscrowInput {
     pub customer_key: fedimint_core::secp256k1::PublicKey,
 }
 
-/// Output: release escrowed funds (to supplier on fulfil, or back to customer on cancel).
+/// Output: release escrowed funds (to supplier on fulfil, or back to customer
+/// on cancel).
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize, Encodable, Decodable)]
 pub struct EscrowOutput {
     /// The order being resolved.
@@ -132,7 +133,11 @@ impl fmt::Display for EscrowClientConfig {
 
 impl fmt::Display for EscrowInput {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "EscrowInput(order={}, amount={})", self.order_id, self.amount)
+        write!(
+            f,
+            "EscrowInput(order={}, amount={})",
+            self.order_id, self.amount
+        )
     }
 }
 

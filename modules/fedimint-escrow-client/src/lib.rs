@@ -16,14 +16,13 @@ use fedimint_core::core::ModuleKind;
 use fedimint_core::db::{
     Database, DatabaseTransaction, DatabaseVersion, IDatabaseTransactionOpsCoreTyped,
 };
-use fedimint_core::module::{
-    Amounts, ApiVersion, ModuleCommon, ModuleInit, MultiApiVersion,
-};
+use fedimint_core::module::{Amounts, ApiVersion, ModuleCommon, ModuleInit, MultiApiVersion};
 use fedimint_core::{Amount, apply, async_trait_maybe_send, push_db_pair_items};
 pub use fedimint_escrow_common as common;
 use fedimint_escrow_common::{
     EscrowCommonInit, EscrowInput, EscrowModuleTypes, EscrowOutput, EscrowResolution, EscrowStatus,
 };
+use fedimint_logging::LOG_CLIENT_MODULE_ESCROW;
 use futures::StreamExt;
 use strum::IntoEnumIterator;
 use tracing::info;
@@ -105,7 +104,7 @@ impl EscrowClientModule {
         .await;
         dbtx.commit_tx().await;
 
-        info!(order_id = %order_id, amount = %amount, "Escrow reserve prepared");
+        info!(target: LOG_CLIENT_MODULE_ESCROW, order_id = %order_id, amount = %amount, "Escrow reserve prepared");
 
         Ok(EscrowInput {
             order_id,
@@ -116,7 +115,8 @@ impl EscrowClientModule {
 
     /// Fulfil an escrow — pay the supplier.
     ///
-    /// Creates an `EscrowOutput` transaction that releases funds to the supplier.
+    /// Creates an `EscrowOutput` transaction that releases funds to the
+    /// supplier.
     pub async fn fulfil(
         &self,
         order_id: String,
@@ -130,7 +130,7 @@ impl EscrowClientModule {
         }
         dbtx.commit_tx().await;
 
-        info!(order_id = %order_id, "Escrow fulfil prepared");
+        info!(target: LOG_CLIENT_MODULE_ESCROW, order_id = %order_id, "Escrow fulfil prepared");
 
         Ok(EscrowOutput {
             order_id,
@@ -148,7 +148,7 @@ impl EscrowClientModule {
         }
         dbtx.commit_tx().await;
 
-        info!(order_id = %order_id, "Escrow cancel prepared");
+        info!(target: LOG_CLIENT_MODULE_ESCROW, order_id = %order_id, "Escrow cancel prepared");
 
         Ok(EscrowOutput {
             order_id,
