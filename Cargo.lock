@@ -3242,6 +3242,53 @@ dependencies = [
 ]
 
 [[package]]
+name = "fedimint-escrow-client"
+version = "0.11.0-alpha"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "erased-serde",
+ "fedimint-api-client",
+ "fedimint-client-module",
+ "fedimint-core",
+ "fedimint-escrow-common",
+ "futures",
+ "serde",
+ "strum 0.27.1",
+ "strum_macros 0.27.1",
+ "thiserror 2.0.12",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "fedimint-escrow-common"
+version = "0.11.0-alpha"
+dependencies = [
+ "anyhow",
+ "fedimint-core",
+ "serde",
+ "thiserror 2.0.12",
+]
+
+[[package]]
+name = "fedimint-escrow-server"
+version = "0.11.0-alpha"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "erased-serde",
+ "fedimint-core",
+ "fedimint-escrow-common",
+ "fedimint-server-core",
+ "futures",
+ "serde",
+ "strum 0.27.1",
+ "strum_macros 0.27.1",
+ "tracing",
+]
+
+[[package]]
 name = "fedimint-eventlog"
 version = "0.11.0-alpha"
 dependencies = [

@@ -1,0 +1,25 @@
+[package]
+authors = { workspace = true }
+description = "fedimint-escrow-common provides marketplace escrow for Fedimint federations. (common types)"
+edition = { workspace = true }
+license = { workspace = true }
+name = "fedimint-escrow-common"
+readme = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "tokio_unstable"]
+
+[lib]
+name = "fedimint_escrow_common"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+fedimint-core = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+
+[lints]
+workspace = true
